@@ -18,7 +18,7 @@ Libraries list
 
 |Header File|Version|Description|
 |-----------|-------|-----------|
-|**stb_sorts.h**|v0.1|Implementation of a variety of sorting algorithms made to work with any type.
+|**ihc_sorts.h**|v0.1|Implementation of a variety of sorting algorithms made to work with any type.
 
 FAQ
 ===
