@@ -3,6 +3,23 @@ ihc
 Ilonic's Headers Collection
 Similarly to [stb](https://github.com/nothings/stb/tree/master) this repository is just a collection of header files.
 
+Quick Start
+===
+```sh
+wget raw.githubusercontent.com/ilonic23/ihc/refs/heads/master/ihc_libname.h
+```
+
+```c
+#define IHC_LIBNAME_IMPLEMENTATION
+#include "ihc_libname.h"
+```
+Libraries list
+===
+
+|Header File|Version|Description|
+|-----------|-------|-----------|
+|**stb_sorts.h**|v0.1|Implementation of a variety of sorting algorithms made to work with any type.
+
 FAQ
 ===
 
