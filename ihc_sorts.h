@@ -264,7 +264,7 @@ static void intro_sort_inner(IHC_SORTS_TYPE *arr, size_t min, size_t max) {
     intro_sort_util(arr + min, arr + max, max_depth);
 }
 
-void ihc_inro_sort(IHC_SORTS_TYPE *arr, size_t len) {
+void ihc_intro_sort(IHC_SORTS_TYPE *arr, size_t len) {
     intro_sort_inner(arr, 0, len);
 }
 
