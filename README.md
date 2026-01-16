@@ -6,7 +6,7 @@ Similarly to [stb](https://github.com/nothings/stb/tree/master) this repository 
 Quick Start
 ===
 ```sh
-wget raw.githubusercontent.com/ilonic23/ihc/refs/heads/master/ihc_libname.h
+curl -O raw.githubusercontent.com/ilonic23/ihc/refs/heads/master/ihc_libname.h
 ```
 
 ```c
