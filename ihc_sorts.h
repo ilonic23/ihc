@@ -1,6 +1,6 @@
 /*
- * ihc_sorts.h - v0.1 - ilonic23 2026
- * This is a single-header-file implementing a variety of sorting algorithms.
+ * ihc_sorts.h - v0.11 - ilonic23 2026
+ * This is a single-header library implementing a variety of sorting algorithms.
  * To use, #define this *once* in a source file: IHC_SORTS_IMPLEMENTATION
  * Then #include "ihc_sorts.h"
  * You should also #define IHC_SORTS_TYPE to set the type that you use when sorting.
@@ -53,6 +53,10 @@
 #ifndef IHC_SORTS_H
 #define IHC_SORTS_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #ifndef IHC_SORTS_TYPE
 #error "'IHC_SORTS_TYPE' must be defined"
 #endif // IHC_SORTS_TYPE
@@ -74,6 +78,12 @@ void ihc_insertion_sort     (IHC_SORTS_TYPE *arr, size_t len);
 void ihc_quick_sort         (IHC_SORTS_TYPE *arr, size_t len);
 void ihc_heap_sort          (IHC_SORTS_TYPE *arr, size_t len);
 void ihc_intro_sort         (IHC_SORTS_TYPE *arr, size_t len);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // IHC_SORTS_H
 
 #ifdef IHC_SORTS_IMPLEMENTATION
 
@@ -269,5 +279,3 @@ void ihc_intro_sort(IHC_SORTS_TYPE *arr, size_t len) {
 }
 
 #endif // IHC_SORTS_IMPLEMENTATION
-
-#endif // IHC_SORTS_H
