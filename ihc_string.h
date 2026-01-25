@@ -1,5 +1,5 @@
 /*
-* ihc_string.h - v0.1 - ilonic23 2026
+* ihc_string.h - v0.11 - ilonic23 2026
 * This is a single-header-file implementing a string as a vector and not an array.
 * To use, #define this *once* in a source file: IHC_STRING_IMPLEMENTATION
 * Then #include "ihc_string.h"
@@ -8,7 +8,7 @@
 * Table of contents - line 7
 * Compile-time options - line 13
 * Documentation - line 22
-* Credits - line
+* Credits - line 45
 *
 * COMPILE-TIME OPTIONS:
 * 
@@ -21,26 +21,35 @@
 * 
 * DOCUMENTATION:
 *
-* ihc_string_new()                                      - initializes a string and returns ihc_string_t pointer to it.
-* ihc_string_from_cstr(const char *str)                 - initializes a string from a default C string and returns ihc_string_t pointer to it.
-*                                                         str - pointer to the C string
-* ihc_string_to_cstr(const ihc_string_t *string)        - converts an ihc_string_t to a default C string and returns a pointer to it.
-*                                                         string - pointer to an ihc_string_t
-* ihc_string_push(ihc_string_t *string, char c)         - pushes a character to the end of the string. returns new length or -1 if failed.
-*                                                         string - pointer to an ihc_string_t to push to.
-*                                                         c - character to push
-* ihc_string_get(ihc_string_t *string, size_t index)    - get a character from the string by index. returns the character and '\0' if failed.
-*                                                         string - pointer to an ihc_string_t.
-*                                                         index  - the index where to get the character at.
-* ihc_string_pop(ihc_string_t *string)                  - pop a character from the end of the string. returns the character and '\0' if failed.
-*                                                         string - pointer to an ihc_string_t.
-* ihc_string_delete(ihc_string_t *string, size_t index) - remove a character from the string by an index. Doesn't change the capacity.
-*                                                         string - pointer to an ihc_string_t.
-*                                                         index - the index to delete the character at.
-* ihc_string_len(ihc_string_t *string)                  - returns the string's length.
-*                                                         string - pointer to an ihc_string_t.
-* ihc_string_capacity(ihc_string_t *string)             - returns the string's capacity.
-*                                                         string - pointer to an ihc_string_t.
+* ihc_string_new()                                                - initializes a string and returns ihc_string_t pointer to it.
+* ihc_string_from_cstr(const char *str)                           - initializes a string from a default C string and returns ihc_string_t pointer to it.
+*                                                                   str - a C string
+* ihc_string_to_cstr(const ihc_string_t *string)                  - converts an ihc_string_t to a default C string and returns a pointer to it.
+*                                                                   string - pointer to an ihc_string_t
+* ihc_string_push(ihc_string_t *string, char c)                   - pushes a character to the end of the string. returns new length or -1 if failed.
+*                                                                   string - pointer to an ihc_string_t to push to.
+*                                                                   c - character to push
+* ihc_string_push_cstr(ihc_string_t *string, const char *c)         - pushes a whole null-terminated C string.
+*                                                                   string - pointer to an ihc_string_t to push to.
+*                                                                   c - a C string
+* ihc_string_concat(ihc_string_t *str0, const ihc_string_t *str1) - concatenates two strings. stores the result in str0
+*                                                                   str0 - pointer to an ihc_string_t to concatenate to.
+*                                                                   str1 - pointer to an ihc_string_t to concatenate to str0.
+* ihc_string_get(const ihc_string_t *string, size_t index)        - get a character from the string by index. returns the character and '\0' if failed.
+*                                                                   string - pointer to an ihc_string_t.
+*                                                                   index  - the index where to get the character at.
+* ihc_string_pop(ihc_string_t *string)                            - pop a character from the end of the string. returns the character and '\0' if failed.
+*                                                                   string - pointer to an ihc_string_t.
+* ihc_string_delete(ihc_string_t *string, size_t index)           - remove a character from the string by an index. Doesn't change the capacity.
+*                                                                   string - pointer to an ihc_string_t.
+*                                                                   index - the index to delete the character at.
+* ihc_string_len(ihc_string_t *string)                            - returns the string's length.
+*                                                                   string - pointer to an ihc_string_t.
+* ihc_string_capacity(ihc_string_t *string)                       - returns the string's capacity.
+*                                                                   string - pointer to an ihc_string_t.
+*
+* CREDITS:
+* ilonic23 - library
 * 
 */
 
@@ -61,6 +70,8 @@ typedef struct IHC_String string_t;
 #define string_from_cstr ihc_string_from_cstr
 #define string_to_cstr   ihc_string_to_cstr
 #define string_push      ihc_string_push
+#define string_push_cstr ihc_string_push_cstr
+#define string_concat    ihc_string_concat
 #define string_get       ihc_string_get
 #define string_pop       ihc_string_pop
 #define string_delete    ihc_string_delete
@@ -74,7 +85,9 @@ struct IHC_String *ihc_string_new();
 struct IHC_String *ihc_string_from_cstr(const char *str);
 char *ihc_string_to_cstr(const struct IHC_String *string);
 int ihc_string_push(struct IHC_String *string, char c);
-unsigned char ihc_string_get(struct IHC_String *string, size_t index);
+int ihc_string_push_cstr(struct IHC_String *string, const char *s);
+int ihc_string_concat(struct IHC_String *str0, const struct IHC_String *str1);
+unsigned char ihc_string_get(const struct IHC_String *string, size_t index);
 unsigned char ihc_string_pop(struct IHC_String *string);
 void ihc_string_delete(struct IHC_String *string, size_t index);
 size_t ihc_string_len(const struct IHC_String *string);
@@ -156,7 +169,21 @@ int ihc_string_push(struct IHC_String *string, char c) {
     return string->len;
 }
 
-unsigned char ihc_string_get(struct IHC_String *string, size_t index) {
+int ihc_string_push_cstr(struct IHC_String *string, const char *s) {
+    if (!string) return -1;
+    while(*str)
+        if (ihc_string_push(string, *str++) == -1) return -1;
+    return 0;
+}
+
+int ihc_string_concat(struct IHC_String *str0, const struct IHC_String *str1) {
+    if (!str0 || !str1) return -1;
+    for (size_t i = 0; i < ihc_string_len(str1); i++)
+        if (ihc_string_push(str0, ihc_string_get(str1, i)) == -1) return -1;
+    return 0;
+}
+
+unsigned char ihc_string_get(const struct IHC_String *string, size_t index) {
     if (!string) return 0;
     if (index >= string->len) return 0;
 
