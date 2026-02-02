@@ -20,7 +20,7 @@ Libraries list
 |-----------|-------|-----------|
 |**ihc_sorts.h**|v0.11|Implementation of a variety of sorting algorithms made to work with any type.
 |**ihc_string.h**|v0.11|Implementation of a safe to use string type.
-|**ihc_tga.h**|?|Implementation of TGA file reader/decoder.
+|**ihc_tga.h**|!|Implementation of TGA file reader/decoder. WILL BE IMPLEMENTED NOT SOON...
 |**ihc_collections.h**|?|Implementation of some collections types|
 
 FAQ
